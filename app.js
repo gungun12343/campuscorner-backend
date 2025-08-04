@@ -96,6 +96,7 @@ app.post("/signup", async(req, res, next) => {
              res.send("working");
         })
     } catch(err){
+        console.log(err);
         next(err);
     }
 })
