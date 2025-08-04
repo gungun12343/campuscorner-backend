@@ -24,6 +24,10 @@ async function main() {
   await mongoose.connect(db_URL);
 }
 
+mongoose.connection.on('error', err => {
+  console.error("Mongoose connection error:", err);
+});
+
 app.use(cors({ origin: 'https://campuscorner-frontend.vercel.app', credentials: true}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
