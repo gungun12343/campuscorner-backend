@@ -28,9 +28,12 @@ mongoose.connection.on('error', err => {
   console.error("Mongoose connection error:", err);
 });
 
-app.use(cors({ origin: 'https://campuscorner-frontend.vercel.app', credentials: true}));
+app.use(cors({ origin: 'https://campuscorner-frontend.vercel.app', credentials: true, methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+app.set("trust proxy", 1);
 
 const sessionOptions = {
     secret: "cec9wedu92u2",
@@ -39,7 +42,9 @@ const sessionOptions = {
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
     }
 };
 
